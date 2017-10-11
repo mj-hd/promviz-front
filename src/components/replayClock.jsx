@@ -112,7 +112,7 @@ class ReplayClock extends React.Component {
     return (
       <div className="clock">
         <OptionsPanel title={dateToString(currentDate) + diffString} ref={(panel) => { this.panel = panel; }}>
-          <span>Offset DateTime</span>
+          <span>Replay from</span>
           <div className="input-group offset-time">
             <input type="datetime" className={this.state.error ? 'form-control error' : 'form-control'} value={this.state.inputValue} onChange={event => this.offsetChanged(event.currentTarget.value)} defaultValue='' onKeyPress={event => this.keyPressed(event)} />
             <span className="input-group-btn">
