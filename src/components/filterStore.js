@@ -8,20 +8,20 @@ import AppConstants from '../appConstants';
 
 const CHANGE_EVENT = 'change';
 
-const noticeMap = ["info", "warning", "danger"];
+const noticeMap = ['info', 'warning', 'danger'];
 
 const defaultFilters = {
   rps: { value: -1 },
   error: { value: -1 },
   clas: { value: [] },
-  notice: { value: ["info", "warning", "danger", "nothing"]}
+  notice: { value: ['normal', 'info', 'warning', 'danger'] }
 };
 
 const noFilters = {
   rps: { value: -1 },
   error: { value: -1 },
   clas: { value: [] },
-  notice: { value: ["info", "warning", "danger", "nothing"]}
+  notice: { value: ['normal', 'info', 'warning', 'danger'] }
 };
 
 const store = {
@@ -49,7 +49,7 @@ const store = {
       type: 'connection',
       passes: (object, value) => {
         if (object.notices.length === 0) {
-          return _.some(value, v => v === "nothing");
+          return _.some(value, v => v === 'normal');
         }
         return !_.every(value, v => _.every(object.notices, notice => notice.severity !== noticeMap.indexOf(v)));
       },
