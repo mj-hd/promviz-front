@@ -11,7 +11,7 @@ import TrafficFlow from './components/trafficFlow';
 
 const updateURL = 'http://localhost:8000';
 const interval = 1000;
-const maxReplayOffset = -12 * 60 * 60 * 1000;
+const maxReplayOffset = 12 * 60 * 60 * 1000;
 
 function fontsActive () {
   ReactDOM.render(

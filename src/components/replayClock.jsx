@@ -57,8 +57,8 @@ class ReplayClock extends React.Component {
       return;
     }
 
-    const offset = inputDate.getTime() - Date.now();
-    if (offset > 0 || this.props.maxOffset - offset > 0) {
+    const offset = Date.now() - inputDate.getTime();
+    if (offset < 0 || this.props.maxOffset - offset < 0) {
       this.setState({
         error: true
       });
