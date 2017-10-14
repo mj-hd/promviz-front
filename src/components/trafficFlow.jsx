@@ -43,7 +43,7 @@ const panelWidth = 400;
 class TrafficFlow extends React.Component {
   static defaultProps = {
     interval: 10 * 1000,
-    maxReplayOffset: -12 * 60 * 60 * 1000
+    maxReplayOffset: 12 * 60 * 60
   }
 
   constructor (props) {
@@ -349,7 +349,7 @@ class TrafficFlow extends React.Component {
         : undefined }
         <div className="subheader">
           <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
-          <ReplayClock time={this.state.serverUpdatedTime} maxOffset={this.props.maxReplayOffset} offsetChanged={offset => this.offsetChanged(offset) } />
+          <ReplayClock time={this.state.serverUpdatedTime} maxOffset={this.props.maxReplayOffset * 1000} offsetChanged={offset => this.offsetChanged(offset) } />
           <div style={{ float: 'right', paddingTop: '4px' }}>
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>

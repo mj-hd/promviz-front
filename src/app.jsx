@@ -1,3 +1,5 @@
+/* global process */
+
 'use strict';
 
 import 'bootstrap';
@@ -9,9 +11,9 @@ import WebFont from 'webfontloader';
 import './app.css';
 import TrafficFlow from './components/trafficFlow';
 
-const updateURL = 'http://localhost:8000';
-const interval = 1000;
-const maxReplayOffset = 12 * 60 * 60 * 1000;
+const updateURL = process.env.UPDATE_URL;
+const interval = process.env.INTERVAL;
+const maxReplayOffset = process.env.MAX_REPLAY_OFFSET;
 
 function fontsActive () {
   ReactDOM.render(

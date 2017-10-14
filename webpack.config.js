@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var Dotenv = require('dotenv-webpack');
 
 module.exports = {
   devtool: 'source-map',
@@ -50,6 +51,10 @@ module.exports = {
       template: './src/index.html',
       favicon: './src/favicon.ico',
       inject: true
+    }),
+    new Dotenv({
+      path: './.env',
+      safe: false
     })
   ]
 };
