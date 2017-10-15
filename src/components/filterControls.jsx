@@ -79,8 +79,8 @@ class FilterControls extends React.Component {
     filterActions.updateFilter({ clas: value });
   }
 
-  noticeChanged (value) {
-    filterActions.updateFilter({ noticeNode: value, noticeConnection: value });
+  noticeChanged (step) {
+    filterActions.updateFilter({ notice: this.state.states.notice[step].value });
   }
 
   resetFilters () {
@@ -89,7 +89,6 @@ class FilterControls extends React.Component {
 
   render () {
     const defaultFilters = filterStore.isDefault();
-    const notices = filterStore.getDefaultFilters().noticeNode.value;
 
     return (
         <div className="vizceral-controls-panel">
@@ -99,11 +98,7 @@ class FilterControls extends React.Component {
             <span>Error(%)</span>
             <Stepper steps={this.state.states.error} selectedStep={filterStore.getStepFromValue('error')} changeCallback={(step) => { this.errorChanged(step); }} />
             <span>Notices</span>
-            <CheckboxGroup name="notice-filter" value={this.state.filters.noticeNode.value} onChange={(value) => { this.noticeChanged(value); }}>
-              { _.map(notices, notice => (
-                  <div key={notice}><label><Checkbox value={notice} disabled={filterStore.isLastNotice(notice)} />{notice}</label></div>
-                )) }
-            </CheckboxGroup>
+            <Stepper steps={this.state.states.notice} selectedStep={filterStore.getStepFromValue('notice')} changeCallback={(step) => { this.noticeChanged(step); }} />
             <span>Classes</span>
             <CheckboxGroup name="class-filter" value={this.state.filters.clas.value} onChange={(value) => { this.classChanged(value); }}>
             {

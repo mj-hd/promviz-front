@@ -8,31 +8,18 @@ import AppConstants from '../appConstants';
 
 const CHANGE_EVENT = 'change';
 
-const noticeMap = ['info', 'warning', 'danger'];
-const defaultNoticeFilter = ['normal', 'info', 'warning', 'danger'];
-const noNoticeFilter = ['normal', 'info', 'warning', 'danger'];
-
 const defaultFilters = {
   rps: { value: -1 },
   error: { value: -1 },
   clas: { value: [] },
-  noticeConnection: { value: defaultNoticeFilter },
-  noticeNode: { value: defaultNoticeFilter }
+  notice: { value: -1 },
 };
 
 const noFilters = {
   rps: { value: -1 },
   error: { value: -1 },
   clas: { value: [] },
-  noticeConnection: { value: noNoticeFilter },
-  noticeNode: { value: noNoticeFilter }
-};
-
-const noticePasses = (object, value) => {
-  if (!object.notices || object.notices.length === 0) {
-    return _.some(value, v => v === 'normal');
-  }
-  return !_.every(value, v => _.every(object.notices, notice => notice.severity !== noticeMap.indexOf(v)));
+  notice: { value: -1 },
 };
 
 const store = {
@@ -55,19 +42,17 @@ const store = {
       passes: (object, value) => value.length <= 0 || value.indexOf(object.class || '') >= 0,
       value: []
     },
-    // TODO: merge notice filters
-    noticeConnection: {
-      name: 'noticeConnection',
+    notice: {
+      name: 'notice',
       type: 'connection',
-      passes: noticePasses,
-      value: []
+      passes: (object, value) => {
+        if (!object.notices || object.notices.length === 0) {
+          return value === -1;
+        }
+        return _.some(object.notices, notice => notice.severity >= value);
+      },
+      value: -1
     },
-    noticeNode: {
-      name: 'noticeNode',
-      type: 'node',
-      passes: noticePasses,
-      value: [] // should have same value as noticeConnection
-    }
 
   },
   states: {
@@ -101,6 +86,24 @@ const store = {
       {
         name: '(>1)',
         value: 0.01
+      },
+      {
+        name: 'all',
+        value: -1
+      }
+    ],
+    notice: [
+      {
+        name: 'danger',
+        value: 2
+      },
+      {
+        name: 'warning',
+        value: 1
+      },
+      {
+        name: 'info',
+        value: 0
       },
       {
         name: 'all',
@@ -209,10 +212,6 @@ class FilterStore extends EventEmitter {
 
   isLastClass (clas) {
     return store.filters.clas.value.length === 1 && store.filters.clas.value.indexOf(clas) === 0;
-  }
-
-  isLastNotice (notice) {
-    return store.filters.noticeNode.value.length === 1 && store.filters.noticeNode.value.indexOf(notice) === 0;
   }
 
   isDefault () {
