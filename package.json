@@ -1,8 +1,8 @@
 {
-  "name": "vizceral-example",
-  "version": "4.3.0",
-  "description": "Vizceral example app",
-  "author": "Justin Reynolds <jreynolds@netflix.com>",
+  "name": "promviz-front",
+  "version": "1.0.0",
+  "description": "promviz front",
+  "author": "Yusuke Otsuka <mjhd.devlion@gmail.com>",
   "scripts": {
     "clean": "rimraf dist && mkdirp dist",
     "lint": "eslint src --ext .js --ext .jsx --fix",
@@ -70,7 +70,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Netflix/vizceral-example.git"
+    "url": "git@github.com:mjhd-devlion/promviz-front.git"
   },
   "pre-commit": [
     "lint",
