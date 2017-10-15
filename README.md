@@ -35,9 +35,11 @@ There are 2 ways to configure this application:
 1. set environment variables
 
 You can customize this application's behavior with these variables:  
+```
 UPDATE_URL: endpoint of promviz server  
 INTERVAL: interval between fetches (ms)  
 MAX_REPLAY_OFFSET: limit of replaying offset (s)  
+```
 
 # Contributing
 Welcome PRs!
