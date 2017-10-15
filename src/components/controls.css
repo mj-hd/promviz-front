@@ -24,3 +24,18 @@
   margin-left: 5px;
 }
 
+
+.vizceral-control-group-title {
+  display: inline-block;
+  background-color: var(--colorPageBackground);
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.vizceral-control-group {
+  border: 2px solid var(--colorBorderLines);
+  margin-top: -0.7em;
+  margin-bottom: 5px;
+  padding-top: 0.3em;
+  padding-left: 10px;
+}

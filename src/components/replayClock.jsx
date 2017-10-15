@@ -8,7 +8,6 @@ import './replayClock.css';
 
 class ReplayClock extends React.Component {
   static defaultProps = {
-    syncThreshold: 2000,
     offsetChanged: () => {}
   }
 
@@ -20,26 +19,17 @@ class ReplayClock extends React.Component {
       inputTime: props.time,
       offset: 0,
       offsetChanged: props.offsetChanged,
-      error: false,
-      updateTimer: undefined
+      error: false
     };
 
     this.panel = undefined;
-  }
-
-  componentDidMount () {
-    this.setState({
-      updateTimer: setInterval(() => { this.setState({ time: this.state.time + 1000 }); }, 1000)
-    });
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.time === this.props.time) {
       return;
     }
-    if (Math.abs(nextProps.time - this.state.time) > this.props.syncThreshold) {
-      this.setState({ time: nextProps.time });
-    }
+    this.setState({ time: nextProps.time });
   }
 
   offsetChanged = (value) => {
@@ -107,14 +97,16 @@ class ReplayClock extends React.Component {
       return `${Math.floor(hours)}h ${Math.floor(minutes % 60)}m ${Math.floor(seconds % 60)}s`;
     };
 
-    const diffString = this.state.offset !== 0 ? `(${offsetToString(this.state.offset)})` : '';
+    const diffString = this.state.offset !== 0 ? `(${offsetToString(this.state.offset)} ago)` : '';
 
     return (
       <div className="clock">
-        <OptionsPanel title={dateToString(currentDate) + diffString} ref={(panel) => { this.panel = panel; }}>
-          <span>Replay from</span>
+        <OptionsPanel title={dateToString(currentDate) + ' ' + diffString} ref={(panel) => { this.panel = panel; }}>
           <div className="input-group offset-time">
-            <input type="datetime" className={this.state.error ? 'form-control error' : 'form-control'} value={this.state.inputValue} onChange={event => this.offsetChanged(event.currentTarget.value)} defaultValue='' onKeyPress={event => this.keyPressed(event)} />
+            <input type="text" className={this.state.error ? 'form-control error' : 'form-control'} value={this.state.inputValue} onChange={event => this.offsetChanged(event.currentTarget.value)} defaultValue='' onKeyPress={event => this.keyPressed(event)} placeholder="2016/4/11 00:00:00" />
+            <span className="input-group-btn">
+              <button className="btn btn-default" onClick={this.offsetEntered}>Replay</button>
+            </span>
             <span className="input-group-btn">
               <button className="btn btn-default" onClick={this.offsetCleared}><i className="glyphicon glyphicon-remove"></i></button>
             </span>
@@ -128,8 +120,7 @@ class ReplayClock extends React.Component {
 ReplayClock.propTypes = {
   time: React.PropTypes.number.isRequired,
   maxOffset: React.PropTypes.number.isRequired,
-  offsetChanged: React.PropTypes.func,
-  syncThreshold: React.PropTypes.number
+  offsetChanged: React.PropTypes.func
 };
 
 export default ReplayClock;
