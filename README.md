@@ -1,4 +1,4 @@
-# Promviz-front
+# Promviz-front [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [nghialv/promviz](https://github.com/nghialv/promviz) web front-end application  
 
 This fork of Netflix's [vizceral-example](https://github.com/Netflix/vizceral-example) contains these new features:
