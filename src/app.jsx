@@ -12,8 +12,8 @@ import './app.css';
 import TrafficFlow from './components/trafficFlow';
 
 const updateURL = process.env.UPDATE_URL;
-const interval = process.env.INTERVAL;
-const maxReplayOffset = process.env.MAX_REPLAY_OFFSET;
+const interval = Number(process.env.INTERVAL);
+const maxReplayOffset = Number(process.env.MAX_REPLAY_OFFSET);
 
 function fontsActive () {
   ReactDOM.render(
