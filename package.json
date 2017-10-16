@@ -1,6 +1,6 @@
 {
   "name": "promviz-front",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "promviz front",
   "author": "Yusuke Otsuka <mjhd.devlion@gmail.com>",
   "scripts": {
@@ -10,7 +10,9 @@
     "copy:json": "cpx \"./src/*.json\" ./dist",
     "dev-server": "webpack-dev-server --host=0.0.0.0 --content-base dist/ --history-api-fallback",
     "dev": "npm-run-all clean --parallel copy:* dev-server",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "dist": "webpack",
+    "start": "npm run dist && node server.js"
   },
   "engines": {
     "node": "~4.4.0"
@@ -18,7 +20,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "dotenv-webpack": "^1.5.4",
+    "express": "^4.16.2",
     "flux": "^3.1.0",
     "hammerjs": "^2.0.8",
     "jquery": "^3.1.1",
@@ -50,6 +52,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "cpx": "^1.5.0",
     "css-loader": "^0.26.0",
+    "dotenv-webpack": "^1.5.4",
     "eslint": "^3.9.0",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-loader": "^1.6.0",
