@@ -21,12 +21,15 @@ import Locator from './locator';
 import OptionsPanel from './optionsPanel';
 import CustomVizceral from './customVizceral';
 import ReplayClock from './replayClock';
+import ServerStatus from './serverStatus';
 
 import filterActions from './filterActions';
 import filterStore from './filterStore';
 
 import trafficActions from './trafficActions';
 import trafficStore from './trafficStore';
+
+import AppConstants from '../appConstants';
 
 const listener = new keypress.Listener();
 
@@ -82,7 +85,9 @@ class TrafficFlow extends React.Component {
       },
       traffic: { nodes: [], connections: [] },
       styles: {},
-      serverUpdatedTime: Date.now()
+      serverUpdatedTime: Date.now(),
+      clientUpdatedTime: Date.now(),
+      serverStatus: AppConstants.ServerStatus.DISCONNECTED
     };
 
     // Browser history support
@@ -158,10 +163,13 @@ class TrafficFlow extends React.Component {
       .set('Accept', 'application/json')
       .query({ offset: Math.floor(trafficStore.getTrafficOffset() / 1000) })
       .end((err, res) => {
+        let serverStatus = AppConstants.ServerStatus.DISCONNECTED;
         if (res && res.status === 200) {
           trafficActions.updateTraffic(res.body);
           this.updateStyles(res.body.classes);
+          serverStatus = AppConstants.ServerStatus.CONNECTED;
         }
+        this.setState({ serverStatus: serverStatus, clientUpdatedTime: Date.now() });
       });
   };
 
@@ -350,6 +358,7 @@ class TrafficFlow extends React.Component {
         <div className="subheader">
           <Breadcrumbs rootTitle="global" navigationStack={this.state.currentView || []} navigationCallback={this.navigationCallback} />
           <ReplayClock time={this.state.serverUpdatedTime} maxOffset={this.props.maxReplayOffset * 1000} offsetChanged={offset => this.offsetChanged(offset) } />
+          <ServerStatus endpoint={this.props.src} status={this.state.serverStatus} clientUpdatedTime={this.state.clientUpdatedTime} />
           <div style={{ float: 'right', paddingTop: '4px' }}>
             { (!globalView && matches) && <Locator changeCallback={this.locatorChanged} searchTerm={this.state.searchTerm} matches={matches} clearFilterCallback={this.filtersCleared} /> }
             <OptionsPanel title="Filters"><FilterControls /></OptionsPanel>

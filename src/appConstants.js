@@ -15,6 +15,10 @@ const AppConstants = {
     UPDATE_TRAFFIC: null,
     CLEAR_TRAFFIC: null,
     UPDATE_TRAFFIC_OFFSET: null
+  }),
+  ServerStatus: keymirror({
+    DISCONNECTED: null,
+    CONNECTED: null
   })
 };
 
