@@ -11,7 +11,7 @@
     "dev-server": "webpack-dev-server --host=0.0.0.0 --content-base dist/ --history-api-fallback",
     "dev": "npm-run-all clean --parallel copy:* dev-server",
     "validate": "npm ls",
-    "dist": "webpack",
+    "dist": "npm run clean && npm run copy:fonts && npm run copy:json && webpack",
     "start": "npm run dist && node server.js"
   },
   "engines": {
